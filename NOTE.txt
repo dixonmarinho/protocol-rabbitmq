@@ -1,0 +1,6 @@
+1 - Nomeclaturas
+2 - Qualidade do Codigo
+3 - Qualidade do Teste
+
+
+Verificar se DI e a melhor nomenclatura para o nome da classe
