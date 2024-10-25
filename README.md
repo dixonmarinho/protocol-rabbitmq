@@ -47,6 +47,8 @@ Módulos Principais
 
 protocol.rabbitmq.api: Contém a API REST para interagir com o sistema de protocolos.
 
+OBS: usuário : user / senha : 123456
+
 protocol.rabbitmq.service: Contém a lógica de negócio para gerenciar os protocolos, incluindo a interação com o RabbitMQ.
 
 protocol.rabbitmq.data: Contém a camada de acesso a dados, utilizando Entity Framework Core para interagir com o banco de dados PostgreSQL.
@@ -213,6 +215,7 @@ Este projeto utiliza o padrão de arquitetura Clean Architecture. As controllers
 Observação importante sobre o exemplo de Controller:
 
 O exemplo de controller ProtocolsController apresentado acima serve apenas para ilustrar o conceito de controllers e como elas são utilizadas em uma API ASP.NET Core. No sistema real, foi utilizada uma abordagem diferente e mais simplificada para a implementação das controllers.
+
 
 Observações
 
