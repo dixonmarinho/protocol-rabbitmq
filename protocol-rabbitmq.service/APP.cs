@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using protocol.rabbitmq.data.Data;
 using protocol.rabbitmq.shared.Interfaces;
 using System.Globalization;
 
@@ -26,6 +27,7 @@ namespace protocol.rabbitmq.service
             bool console = false)
         {
             builder.Services.AddServices();
+
             // Change appsetings
             var appsettings = "appsettings.json";
             builder.Host
@@ -35,8 +37,7 @@ namespace protocol.rabbitmq.service
                     config.AddJsonFile(appsettings, optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
                 })
-                ;
-
+            ;
             var app = builder.Build();
 
             // Configurar a cultura 
@@ -47,6 +48,15 @@ namespace protocol.rabbitmq.service
             //add url and port
             if (console == false)
             {
+                // Cria a estrutura de Dados
+                using (var scope = app.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    var context = services.GetRequiredService<AppDataContext>();
+                    context.Database.EnsureCreated();
+                }
+
+
                 var configuration = app.Services.GetRequiredService<IConfiguration>();
                 app.Urls.Add($"http://0.0.0.0:{PortHttp}");
                 app.UseCors("All");
