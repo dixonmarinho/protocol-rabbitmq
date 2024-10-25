@@ -9,19 +9,19 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["./protocol.publisher/protocol.publisher.csproj", "protocol.publisher/"]
-RUN dotnet restore "./protocol.publisher/protocol.publisher.csproj"
+COPY ["protocol.rabbitmq.api/protocol.rabbitmq.api.csproj", "protocol.rabbitmq.api/"]
+RUN dotnet restore "./protocol.rabbitmq.api/protocol.rabbitmq.api.csproj"
 COPY . .
-WORKDIR "/src/protocol.publisher"
-RUN dotnet build "./protocol.publisher.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/protocol.rabbitmq.api"
+RUN dotnet build "./protocol.rabbitmq.api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./protocol.publisher.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./protocol.rabbitmq.api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "./protocol.publisher.dll"]
+ENTRYPOINT ["dotnet", "protocol.rabbitmq.api.dll"]

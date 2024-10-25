@@ -1,1 +1,1 @@
-# protocol_rabbitqm
+# protocol_rabbitmq

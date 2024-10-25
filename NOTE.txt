@@ -4,3 +4,9 @@
 
 
 Verificar se DI e a melhor nomenclatura para o nome da classe
+
+
+Não foi claro sobre a questao da via, se era pra ser automatico ou inserção manual
+Entao decidi realizar uma insercao automatica
+
+RabbitQM por padrao so aceita conexoes local
